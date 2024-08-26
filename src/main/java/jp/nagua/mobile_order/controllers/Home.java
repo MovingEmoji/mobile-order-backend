@@ -10,7 +10,7 @@ public class Home {
     @GetMapping(value="/")
     @ResponseBody
     private String home() {
-        return "APIのホーム";
+        return "mobileOrderAPIのホーム";
     }
 
 }
