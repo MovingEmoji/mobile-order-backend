@@ -33,7 +33,6 @@ public class Register {
             items.add(new OrderItem(id, name, image, count, cost));
         }
         OrderContent order = new OrderContent(items);
-        MobileOrderApplication.orders.add(order);
         return order.getOrder_id().toString();
     }
 }
