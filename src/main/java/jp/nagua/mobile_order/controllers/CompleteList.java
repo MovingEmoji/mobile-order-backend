@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
-public class Complete {
+public class CompleteList {
 
     @GetMapping(value = "/completes")
     @ResponseBody
