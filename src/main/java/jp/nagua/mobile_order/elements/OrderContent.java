@@ -12,12 +12,16 @@ public class OrderContent implements Serializable {
     private UUID order_id;
     private List<OrderItem> order_list;
     private String status;
+    private int total = 0;
 
     public OrderContent(List<OrderItem> order_list) {
         this.order_id = UUID.randomUUID();
         this.order_list = order_list;
         this.order_num = MobileOrderApplication.orders.size() + 1;
         this.status = "pending";
+        for(OrderItem item : order_list) {
+            total += item.getItem_cost();
+        }
         MobileOrderApplication.orders.add((OrderContent) this);
     }
 
@@ -51,5 +55,13 @@ public class OrderContent implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }
