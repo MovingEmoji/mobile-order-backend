@@ -11,6 +11,7 @@ public class PaymentData {
     private int change;
     private String status;
     private final UUID uuid;
+    private String url;
 
     public PaymentData(int total, UUID uuid) {
         this.total = total;
@@ -18,6 +19,7 @@ public class PaymentData {
         this.deposit = -1;
         this.change = -1;
         this.status = "pending";
+        this.url = "none";
         MobileOrderApplication.payments.add((PaymentData) this);
     }
 
@@ -53,7 +55,15 @@ public class PaymentData {
         this.status = status;
     }
 
-    public UUID getUuid() {
+    public UUID getUUID() {
         return uuid;
+    }
+
+    public String getURL() {
+        return url;
+    }
+
+    public void setURL(String url) {
+        this.url = url;
     }
 }
