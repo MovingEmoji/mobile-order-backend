@@ -40,7 +40,7 @@ public class GetOrder {
         Map<Object, Object> jsonMap = new HashMap<>();
         jsonMap.put("number", order.getOrder_num());
         jsonMap.put("uuid", order.getOrder_id());
-        jsonMap.put("status", order.getTotal());
+        jsonMap.put("status", order.getStatus());
         jsonMap.put("total", order.getTotal());
         List<Object> items = new ArrayList<>();
         for(OrderItem item : order.getOrder_list()) {
