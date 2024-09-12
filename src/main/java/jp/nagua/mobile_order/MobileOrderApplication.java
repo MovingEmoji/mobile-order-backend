@@ -23,6 +23,26 @@ public class MobileOrderApplication {
 		return null;
 	}
 
+	public static PaymentData getPaymentData(String uuid) {
+		for(PaymentData data : payments) {
+			if(data.getUUID().toString().equals(uuid)) {
+				return data;
+			}
+		}
+		return null;
+	}
+
+	public static boolean runPayment(PaymentData data, int deposit) {
+		if(data.getTotal() <= deposit) {
+			data.setDeposit(deposit);
+			data.setChange(deposit - data.getTotal());
+			data.setStatus("complete");
+			return true;
+		}
+		return false;
+	}
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(MobileOrderApplication.class, args);
 	}
