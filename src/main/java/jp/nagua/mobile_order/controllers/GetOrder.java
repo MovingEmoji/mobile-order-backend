@@ -23,16 +23,19 @@ public class GetOrder {
     @ResponseBody
     public String responseOrder(@RequestBody String str) {
         JsonObject json = JsonParser.parseString(str).getAsJsonObject();
-        if(json.get("target").getAsString().equals("all")) {
-            List<Object> jsonList = new ArrayList<>();
-            for(OrderContent order : MobileOrderApplication.orders) {
-                jsonList.add(getOrder(order.getOrder_id().toString()));
+        if(json.get("token").getAsString().equals(MobileOrderApplication.TOKEN)) {
+            if(json.get("target").getAsString().equals("all")) {
+                List<Object> jsonList = new ArrayList<>();
+                for(OrderContent order : MobileOrderApplication.orders) {
+                    jsonList.add(getOrder(order.getOrder_id().toString()));
+                }
+                return new Gson().toJson(jsonList);
+            } else {
+                String uuid = json.get("target").getAsString();
+                return new Gson().toJson(getOrder(uuid));
             }
-            return new Gson().toJson(jsonList);
-        } else {
-            String uuid = json.get("target").getAsString();
-            return new Gson().toJson(getOrder(uuid));
         }
+        return "failed";
     }
 
     private JsonElement getOrder(String uuid) {

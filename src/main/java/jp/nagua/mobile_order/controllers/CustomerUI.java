@@ -2,6 +2,8 @@ package jp.nagua.mobile_order.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import jp.nagua.mobile_order.MobileOrderApplication;
 import jp.nagua.mobile_order.elements.OrderContent;
 import jp.nagua.mobile_order.elements.OrderItem;
@@ -21,27 +23,32 @@ public class CustomerUI {
     @PostMapping(value = "/customer")
     @ResponseBody
     public String customer(@RequestBody String str) {
-        for(OrderContent order : MobileOrderApplication.orders) {
-            if (order.getOrder_id().toString().equals(customerUUID)) {
-                HashMap<Object, Object> jsonMap = new HashMap<>();
-                jsonMap.put("uuid", customerUUID);
-                jsonMap.put("total", order.getTotal());
-                jsonMap.put("status", order.getStatus());
-                List<Object> items = new ArrayList<>();
-                for(OrderItem item : order.getOrder_list()) {
-                    HashMap<Object, Object> itemMap = new HashMap<>();
-                    itemMap.put("id", item.getItem_id());
-                    itemMap.put("uuid", item.getItem_uuid());
-                    itemMap.put("name", item.getItem_name());
-                    itemMap.put("image", item.getItem_image());
-                    itemMap.put("count", item.getItem_count());
-                    itemMap.put("cost", item.getItem_cost());
-                    items.add(new Gson().toJsonTree(itemMap));
+        JsonObject json = JsonParser.parseString(str).getAsJsonObject();
+        if(json.get("token").getAsString().equals(MobileOrderApplication.TOKEN)) {
+            for (OrderContent order : MobileOrderApplication.orders) {
+                if (order.getOrder_id().toString().equals(customerUUID)) {
+                    HashMap<Object, Object> jsonMap = new HashMap<>();
+                    jsonMap.put("uuid", customerUUID);
+                    jsonMap.put("total", order.getTotal());
+                    jsonMap.put("status", order.getStatus());
+                    List<Object> items = new ArrayList<>();
+                    for (OrderItem item : order.getOrder_list()) {
+                        HashMap<Object, Object> itemMap = new HashMap<>();
+                        itemMap.put("id", item.getItem_id());
+                        itemMap.put("uuid", item.getItem_uuid());
+                        itemMap.put("name", item.getItem_name());
+                        itemMap.put("image", item.getItem_image());
+                        itemMap.put("count", item.getItem_count());
+                        itemMap.put("cost", item.getItem_cost());
+                        items.add(new Gson().toJsonTree(itemMap));
+                    }
+                    jsonMap.put("items", new Gson().toJsonTree(items));
+                    return new Gson().toJson(jsonMap);
                 }
-                jsonMap.put("items", new Gson().toJsonTree(items));
-                return new Gson().toJson(jsonMap);
             }
+            return "failed";
+        } else {
+            return "reject";
         }
-        return "failed";
     }
 }
