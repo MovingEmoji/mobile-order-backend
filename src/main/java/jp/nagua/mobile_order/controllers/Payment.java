@@ -34,6 +34,7 @@ public class Payment {
     @ResponseBody
     public String payment(@RequestBody String str) throws ApiException {
         JsonObject json = JsonParser.parseString(str).getAsJsonObject();
+        System.out.println(json);
         PaymentData data = MobileOrderApplication.getPaymentData(json.get("uuid").getAsString());
         if(json.get("type").getAsString().equals("cash")) {
             if(MobileOrderApplication.runPayment(data, json.get("deposit").getAsInt()) == true) {
@@ -59,7 +60,7 @@ public class Payment {
             qrCode.setCodeType("ORDER_QR");
             qrCode.setOrderDescription("モバイルオーダー支払い");
             qrCode.isAuthorization(false);
-            qrCode.setRedirectUrl("http://localhost:3000/customer");
+            qrCode.setRedirectUrl("https://order.tec-festival.com/customer");
             PaymentApi apiInstance = new PaymentApi(apiClient);
             QRCodeDetails response = apiInstance.createQRCode(qrCode);
             data.setStatus("paypayPending");
