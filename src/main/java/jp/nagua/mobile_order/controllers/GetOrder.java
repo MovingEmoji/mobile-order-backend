@@ -34,8 +34,9 @@ public class GetOrder {
                 String uuid = json.get("target").getAsString();
                 return new Gson().toJson(getOrder(uuid));
             }
+        } else {
+            return "reject";
         }
-        return "failed";
     }
 
     private JsonElement getOrder(String uuid) {

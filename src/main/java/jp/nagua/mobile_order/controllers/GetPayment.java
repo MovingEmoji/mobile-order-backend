@@ -23,14 +23,18 @@ public class GetPayment {
     @ResponseBody
     public String responsePayment(@RequestBody String str) {
         JsonObject json = JsonParser.parseString(str).getAsJsonObject();
-        if(json.get("target").getAsString().equals("all")) {
-            List<Object> jsonList = new ArrayList<>();
-            for(PaymentData data : MobileOrderApplication.payments) {
-                jsonList.add(data.getUUID());
+        if(json.get("token").getAsString().equals(MobileOrderApplication.TOKEN)) {
+            if (json.get("target").getAsString().equals("all")) {
+                List<Object> jsonList = new ArrayList<>();
+                for (PaymentData data : MobileOrderApplication.payments) {
+                    jsonList.add(data.getUUID());
+                }
+                return new Gson().toJson(jsonList);
+            } else {
+                return new Gson().toJson(getPayment(json.get("target").getAsString()));
             }
-            return new Gson().toJson(jsonList);
         } else {
-            return new Gson().toJson(getPayment(json.get("target").getAsString()));
+            return "reject";
         }
     }
 

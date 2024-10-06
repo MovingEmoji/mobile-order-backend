@@ -39,6 +39,7 @@ public class MobileOrderApplication {
 			data.setDeposit(deposit);
 			data.setChange(deposit - data.getTotal());
 			data.setStatus("complete");
+			getOrderContent(data.getUUID().toString()).setStatus("paid");
 			return true;
 		}
 		return false;
