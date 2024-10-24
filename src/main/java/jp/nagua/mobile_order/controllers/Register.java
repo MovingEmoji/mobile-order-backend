@@ -30,6 +30,7 @@ public class Register {
             String image = json.get("image").getAsString();
             int count = json.get("count").getAsInt();
             int cost = json.get("cost").getAsInt();
+            MobileOrderApplication.countMap.put(id, MobileOrderApplication.countMap.get(id) + count);
             items.add(new OrderItem(id, name, image, count, cost));
         }
         OrderContent order = new OrderContent(items);

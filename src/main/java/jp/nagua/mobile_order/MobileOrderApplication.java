@@ -5,9 +5,7 @@ import jp.nagua.mobile_order.elements.PaymentData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @SpringBootApplication
 public class MobileOrderApplication {
@@ -15,6 +13,7 @@ public class MobileOrderApplication {
 	public static List<OrderContent> orders = new ArrayList<>();
 	public static List<PaymentData> payments = new ArrayList<>();
 	public static String TOKEN = UUID.randomUUID().toString();
+	public static Map<Integer, Integer> countMap = new HashMap<>();
 
 	public static OrderContent getOrderContent(String uuid) {
 		for(OrderContent order : orders) {
@@ -47,7 +46,11 @@ public class MobileOrderApplication {
 
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MobileOrderApplication.class, args);
+		countMap.put(1,0);
+		countMap.put(2,0);
+		countMap.put(3,0);
 	}
 
 }
