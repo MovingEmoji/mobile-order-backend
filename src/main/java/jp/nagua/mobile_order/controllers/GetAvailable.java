@@ -12,6 +12,11 @@ public class GetAvailable {
     @ResponseBody
     public String getAvailable(@RequestBody String str) {
         String id = str.replace("\"", "").replace("\"", "");
-        return MobileOrderApplication.countMap.get(Integer.valueOf(id)).toString();
+        int count = 50;
+        count -= MobileOrderApplication.countMap.get(Integer.valueOf(id));
+        if(count < 0) {
+            count = 0;
+        }
+        return Integer.toString(count);
     }
 }
