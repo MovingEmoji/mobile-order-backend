@@ -8,60 +8,63 @@ import java.util.UUID;
 
 public class OrderContent implements Serializable {
 
-    private int order_num;
-    private UUID order_id;
-    private List<OrderItem> order_list;
-    private String status;
-    private int total = 0;
+    public static int count = 0;
 
-    public OrderContent(List<OrderItem> order_list) {
-        this.order_id = UUID.randomUUID();
-        this.order_list = order_list;
-        this.order_num = MobileOrderApplication.orders.size() + 1;
-        this.status = "pending";
-        for(OrderItem item : order_list) {
-            total += item.getItem_cost();
+    private int id;
+    private String uuid;
+    private List<ItemContent> itemContents;
+
+    public OrderContent(List<ItemContent> itemContents) {
+        this.id = count;
+        this.uuid = UUID.randomUUID().toString();
+        this.itemContents = itemContents;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        OrderContent.count = count;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public List<ItemContent> getItemContents() {
+        return itemContents;
+    }
+
+    public void setItemContents(List<ItemContent> itemContents) {
+        this.itemContents = itemContents;
+    }
+
+    public void addItemContent(ItemContent content) {
+        this.itemContents.add(content);
+    }
+
+    public void removeItemContent(ItemContent content) {
+        this.itemContents.remove(content);
+    }
+
+    public int getTotalCost() {
+        int cost = 0;
+        for(ItemContent content : this.itemContents) {
+            cost += content.getCost();
         }
-        MobileOrderApplication.orders.add((OrderContent) this);
-    }
-
-    public UUID getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(UUID order_id) {
-        this.order_id = order_id;
-    }
-
-    public List<OrderItem> getOrder_list() {
-        return order_list;
-    }
-
-    public void setOrder_list(List<OrderItem> order_list) {
-        this.order_list = order_list;
-    }
-
-    public int getOrder_num() {
-        return order_num;
-    }
-
-    public void setOrder_num(int order_num) {
-        this.order_num = order_num;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
+        return cost;
     }
 }

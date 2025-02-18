@@ -67,4 +67,5 @@ public class ItemContent implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
 }
