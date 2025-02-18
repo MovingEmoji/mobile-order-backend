@@ -25,7 +25,7 @@ public class GetItemContent {
         JsonObject json = JsonParser.parseString(string).getAsJsonObject();
         if(json.get("target").getAsString().equals("all")) {
             List<Object> jsonList = new ArrayList<>();
-            for(ItemContent content : ItemContentHandler.getItemContents()) {
+            for(ItemContent content : (List<ItemContent>) ItemContentHandler.getInstance().getContents()) {
                 jsonList.add(convertToJson(content.getId()));
             }
             return new Gson().toJson(jsonList);
@@ -35,7 +35,7 @@ public class GetItemContent {
     }
 
     private static JsonElement convertToJson(int id) {
-        ItemContent content = ItemContentHandler.getItemContentFromList(id);
+        ItemContent content = (ItemContent) ItemContentHandler.getInstance().getContentFromList(id);
         Map<Object, Object> jsonMap = new HashMap<>();
         jsonMap.put("id", content.getId());
         jsonMap.put("name", content.getName());

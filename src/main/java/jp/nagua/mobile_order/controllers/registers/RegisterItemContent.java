@@ -23,7 +23,7 @@ public class RegisterItemContent {
             int stock = json.get("stock").getAsInt();
             int cost = json.get("cost").getAsInt();
             String image = json.get("image").getAsString();
-            ItemContentHandler.addItemContentToList(new ItemContent(id, name, text, stock, cost, image));
+            ItemContentHandler.getInstance().addContentToList(new ItemContent(id, name, text, stock, cost, image));
             return "success";
         }
         return "reject";

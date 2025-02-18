@@ -5,7 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jp.nagua.mobile_order.elements.ItemContent;
+import jp.nagua.mobile_order.elements.OrderContent;
 import jp.nagua.mobile_order.handlers.ItemContentHandler;
+import jp.nagua.mobile_order.handlers.OrderContentHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +25,9 @@ public class RegisterOrderContent {
         List<ItemContent> itemContents = new ArrayList<>();
         for(JsonElement element : jsonArray) {
             JsonObject json = element.getAsJsonObject();
-            itemContents.add(ItemContentHandler.getItemContentFromList(element.getAsJsonObject().get("id").getAsInt()));
+            itemContents.add((ItemContent) ItemContentHandler.getInstance().getContentFromList(element.getAsJsonObject().get("id").getAsInt()));
         }
-
-        return "";
+        OrderContentHandler.getInstance().addContentToList(new OrderContent(itemContents));
+        return "success";
     }
 }
