@@ -1,9 +1,5 @@
 package jp.nagua.mobile_order.interfaces;
 
-import jp.nagua.mobile_order.elements.ItemContent;
-
-import java.util.ArrayList;
-
 public interface ContentHandler {
 
     public void initializeContentsList();

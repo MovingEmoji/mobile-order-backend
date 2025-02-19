@@ -1,7 +1,5 @@
 package jp.nagua.mobile_order.elements;
 
-import jp.nagua.mobile_order.MobileOrderApplication;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -13,11 +11,13 @@ public class OrderContent implements Serializable {
     private int id;
     private String uuid;
     private List<ItemContent> itemContents;
+    private String status;
 
     public OrderContent(List<ItemContent> itemContents) {
         this.id = count;
         this.uuid = UUID.randomUUID().toString();
         this.itemContents = itemContents;
+        this.status = "preparation";
     }
 
     public static int getCount() {
@@ -66,5 +66,13 @@ public class OrderContent implements Serializable {
             cost += content.getCost();
         }
         return cost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

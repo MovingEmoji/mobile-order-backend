@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import jp.nagua.mobile_order.MobileOrderApplication;
 import jp.nagua.mobile_order.elements.ItemContent;
 import jp.nagua.mobile_order.handlers.ItemContentHandler;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ import java.util.Map;
 public class GetItemContent {
     @PostMapping(value = "/items")
     @ResponseBody
-    public String getItemContent(@RequestBody String string) {
+    public String getContent(@RequestBody String string) {
         JsonObject json = JsonParser.parseString(string).getAsJsonObject();
         if(json.get("target").getAsString().equals("all")) {
             List<Object> jsonList = new ArrayList<>();
@@ -34,7 +33,7 @@ public class GetItemContent {
         }
     }
 
-    private static JsonElement convertToJson(int id) {
+    public static JsonElement convertToJson(int id) {
         ItemContent content = (ItemContent) ItemContentHandler.getInstance().getContentFromList(id);
         Map<Object, Object> jsonMap = new HashMap<>();
         jsonMap.put("id", content.getId());
