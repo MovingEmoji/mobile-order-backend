@@ -1,6 +1,5 @@
 package jp.nagua.mobile_order.handlers;
 
-import jp.nagua.mobile_order.elements.ItemContent;
 import jp.nagua.mobile_order.elements.OrderContent;
 import jp.nagua.mobile_order.interfaces.ContentHandler;
 
@@ -36,9 +35,9 @@ public class OrderContentHandler implements ContentHandler {
     }
 
     @Override
-    public Object getContentFromList(String uuid) {
+    public Object getContentFromList(String string) {
         for(OrderContent content : orderContents) {
-            if(content.getUuid().equals(uuid)) {
+            if(content.getUuid().equals(string)) {
                 return content;
             }
         }
@@ -56,7 +55,7 @@ public class OrderContentHandler implements ContentHandler {
     }
 
     @Override
-    public ArrayList<ItemContent> getContents() {
-        return null;
+    public Object getContents() {
+        return orderContents.clone();
     }
 }
