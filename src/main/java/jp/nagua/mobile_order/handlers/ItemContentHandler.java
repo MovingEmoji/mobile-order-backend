@@ -58,4 +58,12 @@ public class ItemContentHandler implements ContentHandler {
     public Object getContents() {
         return itemContents.clone();
     }
+
+    @Override
+    public boolean containsContent(Object object) {
+        if(itemContents.contains(object)) {
+            return true;
+        }
+        return false;
+    }
 }

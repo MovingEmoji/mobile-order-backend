@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import jp.nagua.mobile_order.MobileOrderApplication;
 import jp.nagua.mobile_order.elements.ItemContent;
 import jp.nagua.mobile_order.handlers.ItemContentHandler;
+import jp.nagua.mobile_order.handlers.UserHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ public class RegisterItemContent {
     @ResponseBody
     public String registerItemContent(@RequestBody String string) {
         JsonObject json = JsonParser.parseString(string).getAsJsonObject();
-        if(json.get("token").getAsString().equals(MobileOrderApplication.TOKEN)) {
+        if(UserHandler.getInstance().checkToken(json.get("token").getAsString())) {
             int id = json.get("id").getAsInt();
             String name = json.get("name").getAsString();
             String text = json.get("text").getAsString();

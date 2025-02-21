@@ -8,6 +8,7 @@ import jp.nagua.mobile_order.MobileOrderApplication;
 import jp.nagua.mobile_order.elements.ItemContent;
 import jp.nagua.mobile_order.elements.OrderContent;
 import jp.nagua.mobile_order.handlers.OrderContentHandler;
+import jp.nagua.mobile_order.handlers.UserHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,18 +25,18 @@ public class GetOrderContent {
     @ResponseBody
     public String getContent(@RequestBody String string) {
         JsonObject json = JsonParser.parseString(string).getAsJsonObject();
-        if(json.get("token").getAsString().equals(MobileOrderApplication.TOKEN)) {
-            if(json.get("target").getAsString().equals("all")) {
+        if(json.get("target").getAsString().equals("all")) {
+            if(UserHandler.getInstance().checkToken(json.get("token").getAsString())) {
                 List<Object> jsonList = new ArrayList<>();
                 for(OrderContent content : (List<OrderContent>) OrderContentHandler.getInstance().getContents()) {
                     jsonList.add(convertToJson(content.getId()));
                 }
                 return new Gson().toJson(jsonList);
-            } else {
-                return new Gson().toJson(convertToJson(json.get("target").getAsInt()));
             }
+            return "reject";
+        } else {
+            return new Gson().toJson(convertToJson(json.get("target").getAsInt()));
         }
-        return "reject";
     }
 
     public static JsonElement convertToJson(int id) {

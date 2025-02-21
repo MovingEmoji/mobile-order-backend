@@ -10,9 +10,6 @@ import java.util.*;
 @SpringBootApplication
 public class MobileOrderApplication {
 
-	public static String TOKEN = UUID.randomUUID().toString();
-
-
 	public static void main(String[] args) {
 
 		ItemContentHandler.getInstance().initializeContentsList();

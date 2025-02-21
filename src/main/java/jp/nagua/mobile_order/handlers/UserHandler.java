@@ -1,19 +1,19 @@
 package jp.nagua.mobile_order.handlers;
 
-import jp.nagua.mobile_order.elements.OrderContent;
+import jp.nagua.mobile_order.elements.User;
 import jp.nagua.mobile_order.interfaces.ContentHandler;
 
 import java.util.ArrayList;
 
-public class OrderContentHandler implements ContentHandler {
+public class UserHandler implements ContentHandler {
 
-    private static ArrayList<OrderContent> orderContents;
+    private static ArrayList<User> users;
 
-    private static OrderContentHandler handler;
+    private static UserHandler handler;
 
-    public static OrderContentHandler getInstance() {
+    public static UserHandler getInstance() {
         if(handler == null) {
-            handler = new OrderContentHandler();
+            handler = new UserHandler();
             return handler;
         }
         return handler;
@@ -21,24 +21,24 @@ public class OrderContentHandler implements ContentHandler {
 
     @Override
     public void initializeContentsList() {
-        orderContents = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     @Override
     public void addContentToList(Object object) {
-        orderContents.add((OrderContent) object);
+        users.add((User) object);
     }
 
     @Override
     public void removeContentFromList(Object object) {
-        orderContents.remove((OrderContent) object);
+        users.remove((User) object);
     }
 
     @Override
     public Object getContentFromList(String string) {
-        for(OrderContent content : orderContents) {
-            if(content.getUuid().equals(string)) {
-                return content;
+        for(User user : users) {
+            if(user.getName().equals(string)) {
+                return user;
             }
         }
         return null;
@@ -46,9 +46,9 @@ public class OrderContentHandler implements ContentHandler {
 
     @Override
     public Object getContentFromList(int id) {
-        for(OrderContent content : orderContents) {
-            if(content.getId() == id) {
-                return content;
+        for(User user : users) {
+            if(user.getId() == id) {
+                return user;
             }
         }
         return null;
@@ -56,13 +56,22 @@ public class OrderContentHandler implements ContentHandler {
 
     @Override
     public Object getContents() {
-        return orderContents.clone();
+        return users.clone();
     }
 
     @Override
     public boolean containsContent(Object object) {
-        if(orderContents.contains(object)) {
+        if(users.contains(object)) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean checkToken(String string) {
+        for(User user : users) {
+            if(user.getToken().equals(string)) {
+                return true;
+            }
         }
         return false;
     }

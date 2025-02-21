@@ -14,4 +14,5 @@ public interface ContentHandler {
 
     public Object getContents();
 
+    public boolean containsContent(Object object);
 }
