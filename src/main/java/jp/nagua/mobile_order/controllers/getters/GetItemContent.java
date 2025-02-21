@@ -20,6 +20,7 @@ import java.util.Map;
 public class GetItemContent {
     @PostMapping(value = "/items")
     @ResponseBody
+    @SuppressWarnings("unchecked")
     public String getContent(@RequestBody String string) {
         JsonObject json = JsonParser.parseString(string).getAsJsonObject();
         if(json.get("target").getAsString().equals("all")) {
