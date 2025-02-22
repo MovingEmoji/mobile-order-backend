@@ -3,41 +3,31 @@ package jp.nagua.mobile_order.handlers;
 import jp.nagua.mobile_order.elements.User;
 import jp.nagua.mobile_order.interfaces.ContentHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserHandler implements ContentHandler {
+public class UserHandler implements ContentHandler, Serializable {
 
-    private static ArrayList<User> users;
+    private ArrayList<User> users;
 
-    private static UserHandler handler;
-
-    public static UserHandler getInstance() {
-        if(handler == null) {
-            handler = new UserHandler();
-            return handler;
-        }
-        return handler;
+    public UserHandler() {
+        this.users = new ArrayList<>();
     }
 
     @Override
-    public void initializeContentsList() {
-        users = new ArrayList<>();
+    public void addContent(Object object) {
+        this.users.add((User) object);
     }
 
     @Override
-    public void addContentToList(Object object) {
-        users.add((User) object);
+    public void removeContent(Object object) {
+        this.users.remove((User) object);
     }
 
     @Override
-    public void removeContentFromList(Object object) {
-        users.remove((User) object);
-    }
-
-    @Override
-    public Object getContentFromList(String string) {
-        for(User user : users) {
-            if(user.getName().equals(string)) {
+    public Object getContent(String name) {
+        for(User user : this.users) {
+            if(user.getName().equals(name)) {
                 return user;
             }
         }
@@ -45,9 +35,18 @@ public class UserHandler implements ContentHandler {
     }
 
     @Override
-    public Object getContentFromList(int id) {
-        for(User user : users) {
+    public Object getContent(int id) {
+        for(User user : this.users) {
             if(user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public Object getContentWithEmail(String email) {
+        for(User user : this.users) {
+            if(user.getEmail().equals(email)) {
                 return user;
             }
         }
@@ -56,23 +55,18 @@ public class UserHandler implements ContentHandler {
 
     @Override
     public Object getContents() {
-        return users.clone();
+        return this.users.clone();
     }
 
     @Override
-    public boolean containsContent(Object object) {
-        if(users.contains(object)) {
+    public boolean contains(Object object) {
+        if(this.users.contains((User) object)) {
             return true;
         }
         return false;
     }
 
-    public boolean checkToken(String string) {
-        for(User user : users) {
-            if(user.getToken().equals(string)) {
-                return true;
-            }
-        }
-        return false;
+    public int getCounts() {
+        return users.size();
     }
 }

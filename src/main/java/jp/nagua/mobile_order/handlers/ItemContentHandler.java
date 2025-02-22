@@ -3,40 +3,30 @@ package jp.nagua.mobile_order.handlers;
 import jp.nagua.mobile_order.elements.ItemContent;
 import jp.nagua.mobile_order.interfaces.ContentHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ItemContentHandler implements ContentHandler {
+public class ItemContentHandler implements ContentHandler, Serializable {
 
-    private static ArrayList<ItemContent> itemContents;
+    private ArrayList<ItemContent> itemContents;
 
-    private static ItemContentHandler handler;
-
-    public static ItemContentHandler getInstance() {
-        if(handler == null) {
-            handler = new ItemContentHandler();
-            return handler;
-        }
-        return handler;
+    public ItemContentHandler() {
+        this.itemContents = new ArrayList<>();
     }
 
     @Override
-    public void initializeContentsList() {
-        itemContents = new ArrayList<>();
+    public void addContent(Object object) {
+        this.itemContents.add((ItemContent) object);
     }
 
     @Override
-    public void addContentToList(Object object) {
-        itemContents.add((ItemContent) object);
+    public void removeContent(Object object) {
+        this.itemContents.remove((ItemContent) object);
     }
 
     @Override
-    public void removeContentFromList(Object object) {
-        itemContents.remove((ItemContent) object);
-    }
-
-    @Override
-    public Object getContentFromList(String string) {
-        for(ItemContent content : itemContents) {
+    public Object getContent(String string) {
+        for(ItemContent content : this.itemContents) {
             if(content.getName().equals(string)) {
                 return content;
             }
@@ -45,7 +35,7 @@ public class ItemContentHandler implements ContentHandler {
     }
 
     @Override
-    public Object getContentFromList(int id) {
+    public Object getContent(int id) {
         for(ItemContent content : itemContents) {
             if(content.getId() == id) {
                 return content;
@@ -60,8 +50,8 @@ public class ItemContentHandler implements ContentHandler {
     }
 
     @Override
-    public boolean containsContent(Object object) {
-        if(itemContents.contains(object)) {
+    public boolean contains(Object object) {
+        if(itemContents.contains((ItemContent) object)) {
             return true;
         }
         return false;

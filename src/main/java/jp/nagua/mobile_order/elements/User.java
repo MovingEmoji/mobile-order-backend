@@ -1,5 +1,7 @@
 package jp.nagua.mobile_order.elements;
 
+import jp.nagua.mobile_order.handlers.ItemContentHandler;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -10,6 +12,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String token;
+    private ItemContentHandler itemContentHandler;
 
     public User(int id, String name, String email, String password) {
         this.id = id;
@@ -17,6 +20,16 @@ public class User implements Serializable {
         this. email = email;
         this.password = password;
         this.token = UUID.randomUUID().toString();
+        this.itemContentHandler = new ItemContentHandler();
+    }
+
+    public User(int id, String name, String email, String password, String token, ItemContentHandler itemContentHandler) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.token = token;
+        this.itemContentHandler = itemContentHandler;
     }
 
     public int getId() {
@@ -57,5 +70,21 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public ItemContentHandler getItemContentHandler() {
+        return itemContentHandler;
+    }
+
+    public void setItemContentHandler(ItemContentHandler itemContentHandler) {
+        this.itemContentHandler = itemContentHandler;
+    }
+
+    public void printUserData() {
+        System.out.println("ID: " + this.getId());
+        System.out.println("Name: " + this.getName());
+        System.out.println("Email: " + this.getEmail());
+        System.out.println("Password: " + this.getPassword());
+        System.out.println("Token: " + this.getToken());
     }
 }

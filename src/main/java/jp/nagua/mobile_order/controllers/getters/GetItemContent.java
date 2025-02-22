@@ -16,33 +16,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-public class GetItemContent {
-    @PostMapping(value = "/items")
-    @ResponseBody
-    @SuppressWarnings("unchecked")
-    public String getContent(@RequestBody String string) {
-        JsonObject json = JsonParser.parseString(string).getAsJsonObject();
-        if(json.get("target").getAsString().equals("all")) {
-            List<Object> jsonList = new ArrayList<>();
-            for(ItemContent content : (List<ItemContent>) ItemContentHandler.getInstance().getContents()) {
-                jsonList.add(convertToJson(content.getId()));
-            }
-            return new Gson().toJson(jsonList);
-        } else {
-            return new Gson().toJson(convertToJson(json.get("target").getAsInt()));
-        }
-    }
-
-    public static JsonElement convertToJson(int id) {
-        ItemContent content = (ItemContent) ItemContentHandler.getInstance().getContentFromList(id);
-        Map<Object, Object> jsonMap = new HashMap<>();
-        jsonMap.put("id", content.getId());
-        jsonMap.put("name", content.getName());
-        jsonMap.put("text", content.getText());
-        jsonMap.put("stock", content.getStock());
-        jsonMap.put("cost", content.getCost());
-        jsonMap.put("image", content.getImage());
-        return new Gson().toJsonTree(jsonMap);
-    }
-}
+//@Controller
+//public class GetItemContent {
+//    @PostMapping(value = "/items")
+//    @ResponseBody
+//    @SuppressWarnings("unchecked")
+//    public String getContent(@RequestBody String string) {
+//        JsonObject json = JsonParser.parseString(string).getAsJsonObject();
+//        if(json.get("target").getAsString().equals("all")) {
+//            List<Object> jsonList = new ArrayList<>();
+//            for(ItemContent content : (List<ItemContent>) ItemContentHandler.getInstance().getContents()) {
+//                jsonList.add(convertToJson(content.getId()));
+//            }
+//            return new Gson().toJson(jsonList);
+//        } else {
+//            return new Gson().toJson(convertToJson(json.get("target").getAsInt()));
+//        }
+//    }
+//
+//    public static JsonElement convertToJson(int id) {
+//        ItemContent content = (ItemContent) ItemContentHandler.getInstance().getContentFromList(id);
+//        Map<Object, Object> jsonMap = new HashMap<>();
+//        jsonMap.put("id", content.getId());
+//        jsonMap.put("name", content.getName());
+//        jsonMap.put("text", content.getText());
+//        jsonMap.put("stock", content.getStock());
+//        jsonMap.put("cost", content.getCost());
+//        jsonMap.put("image", content.getImage());
+//        return new Gson().toJsonTree(jsonMap);
+//    }
+//}
