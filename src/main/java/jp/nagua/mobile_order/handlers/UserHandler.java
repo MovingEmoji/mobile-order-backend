@@ -53,6 +53,15 @@ public class UserHandler implements ContentHandler, Serializable {
         return null;
     }
 
+    public Object getContentWithToken(String token) {
+        for(User user : users) {
+            if(user.getToken().equals(token)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     @Override
     public Object getContents() {
         return this.users.clone();
