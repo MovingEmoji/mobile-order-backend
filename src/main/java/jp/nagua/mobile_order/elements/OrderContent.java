@@ -18,6 +18,7 @@ public class OrderContent implements Serializable {
         this.uuid = UUID.randomUUID().toString();
         this.itemContents = itemContents;
         this.status = "preparation";
+        count ++;
     }
 
     public static int getCount() {
